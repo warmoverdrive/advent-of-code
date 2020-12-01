@@ -1,3 +1,6 @@
 {
-    "testMate.cpp.log.logSentry": "disable_3"
+    "testMate.cpp.log.logSentry": "disable_3",
+    "files.associations": {
+        "chrono": "cpp"
+    }
 }
