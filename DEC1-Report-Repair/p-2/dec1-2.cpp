@@ -63,6 +63,8 @@ int main()
                     break;
                 }
             }
+            if (result != 0)
+                break;
         }
         if (result != 0)
             break;

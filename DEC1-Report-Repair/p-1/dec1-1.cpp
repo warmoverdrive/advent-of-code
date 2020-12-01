@@ -56,7 +56,10 @@ int main()
 		for (size_t k = i + 1; k < expense_report.size(); k++)
 		{
 			if (expense_report.at(i) + expense_report.at(k) == 2020)
+			{
 				result = expense_report.at(i) * expense_report.at(k);
+				break;
+			}
 		}
 		if (result != 0)
 			break;
