@@ -6,8 +6,8 @@
 #include "../headers/Inputv2.h"
 
 size_t CheckValidPasswords(const std::vector<std::string> &input);
-size_t *GetRange(const std::string &in);
-size_t GetAppearances(const std::string &in, char &test);
+size_t *GetIndexies(const std::string &in);
+bool IsValidPassword(const std::string &pass, char &test, size_t indexies[]);
 
 int main()
 {
@@ -18,12 +18,11 @@ int main()
     //     "1-3 a: abcde",
     //     "1-3 b: cdefg",
     //     "2-9 c: ccccccccc"};
-    // first substring is range of valid repeats
+    // first substring is indexes of characters to test
     // second substring is character to test
     // third substring is password
-    // check if test char is repeated no more and no less than range
-    // example: 1-3 a: abcde = true because 'a' repeats once
-    // example: 1-3 b: cdefg = false because 'b' never appears
+    // check if 1 but not 2 indexes of the password match the test char
+    // example: 1-3 a: abcde = true because 'a' appears at i1 and not i3
 
     std::cout << "Data size: " << in.data.size() << '\n';
 
@@ -54,16 +53,13 @@ size_t CheckValidPasswords(const std::vector<std::string> &input)
             lineData.push_back(item);
 
         // parse first input
-        size_t *range = GetRange(lineData.at(0));
+        size_t *indexies = GetIndexies(lineData.at(0));
 
         // parse second input
         char *test = &lineData.at(1).at(0);
 
-        // check count of chars in third input
-        size_t repeats = GetAppearances(lineData.at(2), *test);
-
-        // if in bounds inc counter
-        if (repeats >= range[0] && repeats <= range[1])
+        // check the password for validation - if valid inc counter
+        if (IsValidPassword(lineData.at(2), *test, indexies))
             counter++;
 
         lineData.clear();
@@ -72,26 +68,27 @@ size_t CheckValidPasswords(const std::vector<std::string> &input)
     return counter;
 }
 
-size_t *GetRange(const std::string &input)
+size_t *GetIndexies(const std::string &input)
 {
-    static size_t range[2];
+    static size_t indexies[2];
     std::stringstream sstream;
     sstream << input;
 
     int temp{};
-    sstream >> range[0];
-    sstream >> temp;      // sstream parses second number as negative
-    range[1] = abs(temp); // get the abs value for the size_t
+    sstream >> indexies[0];
+    sstream >> temp;         // sstream parses second number as negative
+    indexies[1] = abs(temp); // get the abs value for the size_t
 
     sstream.clear();
-    return range;
+    return indexies;
 }
 
-size_t GetAppearances(const std::string &input, char &test)
+bool IsValidPassword(const std::string &pass, char &test, size_t indexies[])
 {
-    size_t repeats{};
-    for (char c : input)
-        if (c == test)
-            repeats++;
-    return repeats;
+    bool index1valid = pass.at(indexies[0] - 1) == test;
+    bool index2valid = pass.at(indexies[1] - 1) == test;
+    if (index1valid != index2valid)
+        return true;
+    else
+        return false;
 }
