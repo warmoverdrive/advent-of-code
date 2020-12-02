@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
-#include "../../headers/Input.h"
+#include "../../headers/Inputv1.h"
 
 void NestedLoopSearch(const std::vector<int> &data, int &results);
 void HashSearch(const std::vector<int> &data, int &results);

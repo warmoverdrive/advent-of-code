@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "Input.h"
+#include "../../headers/Inputv1.h"
 
 int main()
 {
