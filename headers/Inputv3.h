@@ -1,5 +1,5 @@
-#ifndef INPUT1_H
-#define INPUT1_H
+#ifndef INPUT2_H
+#define INPUT2_H
 
 #include <iostream>
 #include <fstream>
