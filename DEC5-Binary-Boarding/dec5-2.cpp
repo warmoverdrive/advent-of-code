@@ -6,7 +6,7 @@
 #include "../headers/Inputv3.h"
 
 /* === Part 2 Specs ===
-    Using the seat IDs from part 1, find your seat.
+    Using the seat IDs from part 1, find your seat, assuming all other seats are filled
 
     Add all seat IDs to a vector, and use a sort algo to get them in order
 
@@ -46,6 +46,7 @@ size_t FindSeat(const std::vector<std::string> &input)
         if (seatIDs->at(i + 1) - seatIDs->at(i) == 2)
             return seatIDs->at(i) + 1;
     }
+    return 0;
 }
 
 std::vector<size_t> *ConvertToIDs(const std::vector<std::string> &input)
