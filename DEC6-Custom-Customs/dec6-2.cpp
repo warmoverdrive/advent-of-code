@@ -40,10 +40,10 @@ int main()
 
 size_t GetAnswerCounts(const std::string &input)
 {
-    std::stringstream sstream;
-    std::string temp{};
-    std::vector<std::string> answers{};
-    std::unordered_map<char, size_t> chars{};
+    static std::stringstream sstream;
+    static std::string temp{};
+    static std::vector<std::string> answers{};
+    static std::unordered_map<char, size_t> chars{};
     size_t count{};
 
     sstream << input;
@@ -65,6 +65,10 @@ size_t GetAnswerCounts(const std::string &input)
         if (set.second == answers.size())
             count++;
     }
+
+    chars.clear();
+    answers.clear();
+    sstream.clear();
 
     return count;
 }
