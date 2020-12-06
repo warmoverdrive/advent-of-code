@@ -26,9 +26,12 @@
 	Goal: Input all boarding passes and determine the pass with the highest ID number
 */
 
+size_t BinarySort(const std::string &string, size_t lowerBound, size_t upperBound);
+size_t GetPassID(const std::string &pass);
+
 int main()
 {
-	Input<std::string> in("PuzzleInput/Day5Test.txt", '\n');
+	Input<std::string> in("PuzzleInput/Day5Input.txt", '\n');
 
 	size_t highestID{};
 	size_t seatID{};
@@ -36,7 +39,7 @@ int main()
 	auto start = std::chrono::high_resolution_clock::now();
 	for (auto pass : in.data)
 	{
-		seatID = 0; //TODO Function to get ID
+		seatID = GetPassID(pass);
 
 		if (seatID > highestID)
 			highestID = seatID;
@@ -80,7 +83,11 @@ size_t BinarySort(const std::string &string, size_t lowerBound, size_t upperBoun
 			divisor /= 2;
 		}
 	}
-	// TODO: Impliment checking the last digit of the code for the result
+
+	if (string.at(string.size() - 1) == 'F' || string.at(string.size() - 1) == 'L')
+		result = lowerBound;
+	else
+		result = upperBound;
 
 	return result;
 }
