@@ -11,7 +11,7 @@ template <typename T>
 struct Input
 {
     std::vector<T> data;
-    Input(const std::string &path, char delim = ' ')
+    Input(const std::string &path, char delim)
     {
         try
         {
