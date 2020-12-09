@@ -1,9 +1,13 @@
+/*  I can't figure out how to link this atm */
+
 #include "luggage.h"
 #include <string>
 #include <unordered_map>
 
-Luggage::Luggage(std::string &nameValue)
-    : name{nameValue}, contains{} {};
+Luggage::Luggage(std::string nameValue)
+    : name{nameValue}
+{
+}
 
 void Luggage::SetLuggageName(std::string &nameValue) { name = nameValue; }
 

@@ -2,6 +2,7 @@
 #define INPUT_H4
 
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <vector>
 #include <string>
@@ -10,7 +11,7 @@
 namespace Input
 {
 	template <typename T>
-	std::vector<T> GetData(const std::string &path, char delim = ' ')
+	std::vector<T> GetData(const std::string &path, char delim)
 	{
 		std::vector<T> data;
 		try
@@ -19,10 +20,14 @@ namespace Input
 			std::string line;
 			while (std::getline(infile, line, delim))
 			{
-				T element;
-				std::stringstream input(line);
-				while (input >> element)
-					data.push_back(element);
+				// The commented out code below effectively negates the delim param
+				// Pushing back the line to Data after getline() ensures our delim
+				// is used in the final result.
+				data.push_back(line);
+				// T element;
+				// std::stringstream input(line);
+				// while (input >> element)
+				// 	data.push_back(element);
 			}
 		}
 		catch (...)
