@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 #include <unordered_map>
 #include <memory>
 #include <chrono>
@@ -14,7 +15,7 @@
     Given the list of bag colors and contents, how many bags could at some
     point contain a shiny gold bag?
 
-    We're store our data in an unordered map:
+    We'll store our data in an unordered map:
         <str::string, Luggage *> 
             first.string name of luggage for easy search
             second.unique pointer to luggage object
@@ -50,6 +51,8 @@
 */
 
 size_t HaversacksSearcher(std::vector<std::string> &input);
+void GenerateLuggageMap(std::unordered_map<std::string, Luggage *> &masterMap, std::vector<std::string> &input);
+void ReverseSearch(std::vector<std::string> &targetVec, Luggage *targetBag);
 
 int main()
 {
@@ -66,5 +69,53 @@ int main()
 
 size_t HaversacksSearcher(std::vector<std::string> &input)
 {
-    // TODO IMPLIMENT
+    // Create Unordered Map (MasterMap)
+    std::unordered_map<std::string, Luggage *> masterMap{};
+
+    // Generate Objects and populate Map
+    GenerateLuggageMap(masterMap, input);
+
+    // Reverse Search to find all bags that "shiny gold" originate from
+    std::vector<std::string> bagsFrom{};
+    //ReverseSearch(std::vector<std::string> bagsFrom, TODO FILL IN)
+
+    // Count bagsFrom and return value
+    return bagsFrom.size();
+}
+
+void GenerateLuggageMap(std::unordered_map<std::string, Luggage *> &masterMap, std::vector<std::string> &input)
+{
+    std::stringstream sstream;
+    std::string colorAdj{}, colorName{}, num{}, trash{};
+
+    // Generate the map
+    for (std::string line : input)
+    {
+        sstream << line;
+        // get first two words
+        sstream >> colorAdj >> colorName;
+        // compound the two words for later use (in the correct order)
+        colorName = colorAdj + " " + colorName;
+
+        if (masterMap.find(colorName) == masterMap.end())
+        {
+            auto newLuggage = std::make_unique<Luggage>(colorName);
+            masterMap.insert({colorName, newLuggage.get()});
+        }
+
+        for (auto pair : masterMap)
+        {
+            std::cout << pair.first << " " << pair.second << '\n';
+            std::cout << pair.second->GetName() << '\n';
+        }
+
+        sstream.str("");
+    }
+
+    sstream.str("");
+}
+
+void ReverseSearch(std::vector<std::string> &targetVec, Luggage *targetBag)
+{
+    // Recursive search through all From objects
 }

@@ -4,8 +4,6 @@
 #include <string>
 #include <unordered_map>
 
-/* === TODO === Add from Map of names and pointers */
-
 class Luggage
 {
 private:
@@ -13,6 +11,9 @@ private:
     std::unordered_map<Luggage *, size_t> contains;
 
 public:
+    // making this public cause I cant think of another way to range based loop it
+    std::unordered_map<std::string, Luggage *> from;
+
     void SetLuggageName(std::string &nameValue);
     std::string GetName() const;
     void AddToContainer(Luggage *luggage, size_t number);
@@ -22,7 +23,7 @@ public:
 };
 
 Luggage::Luggage(std::string nameValue)
-    : name{nameValue}, contains{} {};
+    : name{nameValue}, contains{}, from{} {};
 
 void Luggage::SetLuggageName(std::string &nameValue) { name = nameValue; }
 
