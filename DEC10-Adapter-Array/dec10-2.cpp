@@ -2,11 +2,12 @@
 #include <vector>
 #include <chrono>
 #include <algorithm>
+#include <map>
 #include "../headers/Inputv4.h"
 
 unsigned long long AdapterOptions(std::vector<size_t> &input);
 void SortInput(std::vector<size_t> &input);
-void DeepSearch(std::vector<size_t> &input, unsigned long long &iterator, size_t index);
+void DeepSearch(std::vector<size_t> &input, unsigned long long &iterator);
 
 int main()
 {
@@ -25,40 +26,38 @@ unsigned long long AdapterOptions(std::vector<size_t> &input)
 {
     SortInput(input);
 
-    unsigned long long iterator{};
-    DeepSearch(input, iterator, 0);
+    unsigned long long iterator{1};
+    DeepSearch(input, iterator);
 
     return iterator;
 }
 
-void DeepSearch(std::vector<size_t> &input, unsigned long long &iterator, size_t index)
+/* === Figured this solution out with help from u/Nunki3 on the A0C subreddit === */
+void DeepSearch(std::vector<size_t> &input, unsigned long long &iterator)
 {
-    if (index == input.size() - 1)
+    std::map<size_t, unsigned long long> pathMap;
+
+    for (auto const &val : input)
     {
-        iterator++;
+        pathMap[val] = 0;
     }
-    else
+    pathMap[0]++;
+
+    for (size_t i{0}; i < input.size(); i++)
     {
-        size_t plus1 = input.at(index) + 1;
-        auto result = std::find(input.begin() + index, input.end(), plus1);
-        if (result != input.end())
-        {
-            DeepSearch(input, iterator, result - input.begin()); // result is an iterator so
-                                                                 // we have to subtract the beginning
-        }                                                        // from it to resovle the index
-        size_t plus2 = input.at(index) + 2;
-        result = std::find(input.begin() + index, input.end(), plus2);
-        if (result != input.end())
-        {
-            DeepSearch(input, iterator, result - input.begin());
-        }
-        size_t plus3 = input.at(index) + 3;
-        result = std::find(input.begin() + index, input.end(), plus3);
-        if (result != input.end())
-        {
-            DeepSearch(input, iterator, result - input.begin());
-        }
+        auto r1 = std::find(input.begin() + i, input.end(), input.at(i) + 1);
+        auto r2 = std::find(input.begin() + i, input.end(), input.at(i) + 2);
+        auto r3 = std::find(input.begin() + i, input.end(), input.at(i) + 3);
+
+        if (r1 != input.end())
+            pathMap.at(*r1) += pathMap.at(input.at(i));
+        if (r2 != input.end())
+            pathMap.at(*r2) += pathMap.at(input.at(i));
+        if (r3 != input.end())
+            pathMap.at(*r3) += pathMap.at(input.at(i));
     }
+
+    iterator = pathMap.at(input.at(input.size() - 1));
 }
 
 void SortInput(std::vector<size_t> &input)
