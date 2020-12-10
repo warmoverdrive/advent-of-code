@@ -23,7 +23,7 @@ bool RunProgramUntilLoop(std::vector<Instruction> program, int &acc);
 
 int main()
 {
-    std::vector<std::string> input = Input::GetData<std::string>("PuzzleInput/Day8Test.txt", '\n');
+    std::vector<std::string> input = Input::GetData<std::string>("PuzzleInput/Day8Input.txt", '\n');
 
     auto start = std::chrono::high_resolution_clock::now();
     int result = CompileAndRun(input);
@@ -61,23 +61,20 @@ int FixProgram(std::vector<Instruction> &program)
 {
     int acc{};
     int iter{};
-    for (Instruction i : program)
+    for (Instruction &i : program)
     {
         if (i.inst == "acc")
         {
             if (RunProgramUntilLoop(program, acc) == true)
             {
-                std::cout << "Broken Operation Found! " << i.inst << "::" << i.value << '\n';
                 break;
             }
         }
         else if (i.inst == "nop")
         {
             i.inst = "jmp";
-            std::cout << "was nop is now: " << i.inst << '\n';
             if (RunProgramUntilLoop(program, acc) == true)
             {
-                std::cout << "Broken Operation Found! " << i.inst << "::" << i.value << '\n';
                 break;
             }
             else
@@ -86,10 +83,8 @@ int FixProgram(std::vector<Instruction> &program)
         else if (i.inst == "jmp")
         {
             i.inst = "nop";
-            std::cout << "was jmp is now: " << i.inst << '\n';
             if (RunProgramUntilLoop(program, acc) == true)
             {
-                std::cout << "Broken Operation Found! " << i.inst << "::" << i.value << '\n';
                 break;
             }
             else
@@ -97,7 +92,6 @@ int FixProgram(std::vector<Instruction> &program)
         }
         iter++;
     }
-    std::cout << "iterations: " << iter << " :: size of program: " << program.size() << '\n';
 
     return acc;
 }
