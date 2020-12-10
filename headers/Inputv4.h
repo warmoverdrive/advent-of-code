@@ -11,6 +11,29 @@
 namespace Input
 {
 	template <typename T>
+	std::vector<T> GetNumberData(const std::string &path, char delim)
+	{
+		std::vector<T> data;
+		try
+		{
+			std::ifstream infile(path);
+			std::string line;
+			while (std::getline(infile, line, delim))
+			{
+				T element;
+				std::stringstream input(line);
+				while (input >> element)
+					data.push_back(element);
+			}
+		}
+		catch (...)
+		{
+			std::cout << "An error occured!\n";
+		}
+		return data;
+	}
+
+	template <typename T>
 	std::vector<T> GetData(const std::string &path, char delim)
 	{
 		std::vector<T> data;
