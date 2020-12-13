@@ -7,6 +7,8 @@
 #include <chrono>
 #include "../headers/Inputv4.h"
 
+/*  For Part 2 I refactored Boat into a class in boat.h
+    couldn't be bothered to update it here.             */
 struct Boat
 {
     char bearing;
