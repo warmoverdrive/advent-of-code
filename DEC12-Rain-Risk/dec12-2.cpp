@@ -59,8 +59,6 @@ void ExecInstructions(Boat &boat, InstructionSet &instructions)
 {
     while (!instructions.empty())
     {
-        if (boat.waypoint.first == 0 || boat.waypoint.second == 0)
-            std::cout << "! ";
         switch (instructions.front().first)
         {
         case 'N':

@@ -1,6 +1,7 @@
 #ifndef _BOAT_H
 #define _BOAT_H
 
+#include <iostream>
 #include <unordered_map>
 #include <stdlib.h>
 #include <queue>
@@ -26,16 +27,12 @@ void Boat::MoveBoat(int forwardMultiplier)
     local.second += forwardMultiplier * waypoint.second;
 }
 
-/*  SOMETHING IS WRONG HERE I THINK- 
-    LEFT TURN IS THE ONLY FUNCTION THAT 
-    ISN"T USED IN TEST CASE        
-*/
 void Boat::RotateWaypoint(int degrees)
 {
     Coords temp{};
     if (degrees > 0) // turn right
     {
-        for (int i{}; i <= degrees; i += 90)
+        for (int i{}; i < degrees; i += 90)
         {
             temp.first = 0;
             temp.second = 0;
@@ -54,7 +51,7 @@ void Boat::RotateWaypoint(int degrees)
     }
     else // turn left
     {
-        for (int i{}; i <= abs(degrees); i += 90)
+        for (int i{}; i < abs(degrees); i += 90)
         {
             temp.first = 0;
             temp.second = 0;
