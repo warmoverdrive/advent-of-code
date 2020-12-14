@@ -35,6 +35,37 @@ namespace BusInput
         }
         return data;
     }
+
+    std::vector<int> GetExtraBusData(const std::string &path, char delim)
+    {
+        std::vector<int> data;
+        try
+        {
+            std::ifstream infile(path);
+            std::string line;
+            std::getline(infile, line, '\n'); // discard first line
+
+            int counter{};
+
+            while (std::getline(infile, line, delim))
+            {
+                if (line == "x")
+                    counter++;
+                else
+                {
+                    if (counter > 0)
+                        data.push_back(counter);
+                    counter = 0;
+                    data.push_back(stoi(line));
+                }
+            }
+            return data;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "HI!" << '\n';
+        }
+    }
 } // namespace BusInput
 
 #endif // BUS_INPUT_H
