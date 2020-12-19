@@ -45,6 +45,8 @@
         "typeinfo": "cpp",
         "iomanip": "cpp",
         "map": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "functional": "cpp",
+        "iterator": "cpp"
     }
 }
